@@ -2,8 +2,6 @@ package top.huangsansui.spring;
 
 import org.junit.Test;
 
-import java.io.File;
-
 /**
  * Function:
  *
