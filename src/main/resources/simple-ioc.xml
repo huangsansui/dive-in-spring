@@ -1,0 +1,11 @@
+<beans>
+    <bean id="wheel" class="top.huangsansui.spring.Wheel">
+        <property name="name" value="Michelin"/>
+        <property name="size" value="15"/>
+    </bean>
+    <bean id="car" class="top.huangsansui.spring.Car">
+        <property name="name" value="Audi"></property>
+        <property name="price" value="1000"></property>
+        <property name="wheel" ref="top.huangsansui.spring.Wheel"></property>
+    </bean>
+</beans>
