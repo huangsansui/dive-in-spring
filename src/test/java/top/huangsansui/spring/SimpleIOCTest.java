@@ -1,5 +1,7 @@
 package top.huangsansui.spring;
 
+import org.junit.Test;
+
 import java.io.File;
 
 /**
@@ -11,8 +13,8 @@ import java.io.File;
  */
 public class SimpleIOCTest {
 
-
-    public static void main(String[] args) throws Exception {
+    @Test
+    public void test() throws Exception {
         SimpleIOC simpleIOC = new SimpleIOC("src/main/resources/simple-ioc.xml");
         Car car = (Car) simpleIOC.getBean("car");
         System.out.println(car);
