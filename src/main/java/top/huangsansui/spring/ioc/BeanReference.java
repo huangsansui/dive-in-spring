@@ -7,15 +7,14 @@ package top.huangsansui.spring.ioc;
  * @Date: 2018/12/21
  * @since: JDK 1.8
  */
-public class BeanProperty {
+public class BeanReference {
 
     private String name;
 
-    private Object value;
+    private Object bean;
 
-    public BeanProperty(String name, Object value) {
-        this.name = name;
-        this.value = value;
+    public BeanReference(String ref) {
+        this.name = ref;
     }
 
     public String getName() {
@@ -26,11 +25,11 @@ public class BeanProperty {
         this.name = name;
     }
 
-    public Object getValue() {
-        return value;
+    public Object getBean() {
+        return bean;
     }
 
-    public void setValue(Object value) {
-        this.value = value;
+    public void setBean(Object bean) {
+        this.bean = bean;
     }
 }

@@ -9,13 +9,14 @@ package top.huangsansui.spring.ioc;
  */
 public class BeanDefinition {
 
-    private String bean;
+    private Object bean;
 
     private Class beanClass;
 
     private String beanClassName;
 
     private BeanProperties beanProperties = new BeanProperties();
+
 
     public BeanProperties getBeanProperties() {
         return beanProperties;
@@ -25,11 +26,11 @@ public class BeanDefinition {
         this.beanProperties = beanProperties;
     }
 
-    public String getBean() {
+    public Object getBean() {
         return bean;
     }
 
-    public void setBean(String bean) {
+    public void setBean(Object bean) {
         this.bean = bean;
     }
 
@@ -37,12 +38,8 @@ public class BeanDefinition {
         return beanClass;
     }
 
-    public void setBeanClass(String beanClass) {
-        try {
-            this.beanClass = Class.forName(beanClassName);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    public void setBeanClass(Class beanClass) {
+        this.beanClass = beanClass;
     }
 
     public String getBeanClassName() {
@@ -51,5 +48,10 @@ public class BeanDefinition {
 
     public void setBeanClassName(String beanClassName) {
         this.beanClassName = beanClassName;
+        try {
+            this.beanClass = Class.forName(beanClassName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

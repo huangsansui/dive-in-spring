@@ -11,7 +11,7 @@ public class Car {
 
     private String name;
 
-    private Integer price;
+    private String price;
 
     private Wheel wheel;
 

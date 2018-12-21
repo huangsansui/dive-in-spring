@@ -11,7 +11,7 @@ public class Wheel {
 
     private String name;
 
-    private Integer size;
+    private String size;
 
     @Override
     public String toString() {

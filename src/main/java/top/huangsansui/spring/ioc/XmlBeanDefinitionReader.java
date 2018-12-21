@@ -55,7 +55,7 @@ public class XmlBeanDefinitionReader {
         String id = bean.getAttribute("id");
         String className = bean.getAttribute("class");
         BeanDefinition beanDefinition = new BeanDefinition();
-        beanDefinition.setBeanClass(className);
+        beanDefinition.setBeanClassName(className);
         processProperty(bean, beanDefinition);
         register.put(id, beanDefinition);
     }
@@ -77,9 +77,14 @@ public class XmlBeanDefinitionReader {
                     if (ref == null || ref.length() <= 0) {
                         throw new IllegalAccessException("ref config error");
                     }
-
+                    BeanReference reference = new BeanReference(ref);
+                    beanDefinition.getBeanProperties().addProperty(new BeanProperty(name, reference));
                 }
             }
         }
+    }
+
+    public HashMap<String, BeanDefinition> getRegister() {
+        return register;
     }
 }

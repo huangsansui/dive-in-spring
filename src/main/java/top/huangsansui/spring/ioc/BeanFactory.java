@@ -9,5 +9,5 @@ package top.huangsansui.spring.ioc;
  */
 public interface BeanFactory {
 
-    Object getBean(String beanId);
+    Object getBean(String beanId) throws Exception;
 }

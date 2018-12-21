@@ -17,4 +17,8 @@ public class BeanProperties {
     public void addProperty(BeanProperty property) {
         propertyList.add(property);
     }
+
+    public List<BeanProperty> getPropertyList() {
+        return propertyList;
+    }
 }
