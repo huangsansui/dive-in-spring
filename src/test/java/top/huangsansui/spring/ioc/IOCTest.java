@@ -1,7 +1,8 @@
-package top.huangsansui.spring;
+package top.huangsansui.spring.ioc;
 
 import org.junit.Test;
 import top.huangsansui.spring.ioc.XmlBeanFactory;
+import top.huangsansui.spring.simple.Car;
 
 /**
  * Function:

@@ -1,4 +1,4 @@
-package top.huangsansui.spring;
+package top.huangsansui.spring.simple;
 
 /**
  * Function:
@@ -7,17 +7,20 @@ package top.huangsansui.spring;
  * @Date: 2018/12/19
  * @since: JDK 1.8
  */
-public class Wheel {
+public class Car {
 
     private String name;
 
-    private String size;
+    private String price;
+
+    private Wheel wheel;
 
     @Override
     public String toString() {
-        return "Wheel{" +
+        return "Car{" +
                 "name='" + name + '\'' +
-                ", size=" + size +
+                ", price=" + price +
+                ", wheel=" + wheel +
                 '}';
     }
 }

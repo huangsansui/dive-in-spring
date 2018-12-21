@@ -1,6 +1,9 @@
-package top.huangsansui.spring;
+package top.huangsansui.spring.simple;
 
 import org.junit.Test;
+import top.huangsansui.spring.simple.Car;
+import top.huangsansui.spring.simple.SimpleIOC;
+import top.huangsansui.spring.simple.Wheel;
 
 /**
  * Function:
