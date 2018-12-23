@@ -1,5 +1,7 @@
 package top.huangsansui.spring.ioc;
 
+import top.huangsansui.spring.aop.AspectJExpressionPointcutAdvisor;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,7 +23,9 @@ public class XmlBeanFactory implements BeanFactory {
 
     private Map<String, BeanDefinition> beanDefinitionMap = new HashMap<String, BeanDefinition>();
 
-    private List<String> beanNameList = new ArrayList();
+    private List<String> beanDefinitionNames = new ArrayList<>();
+
+    private List<BeanProcessor> beanProcessors = new ArrayList<>();
 
     /**
      * 读取xml配置
@@ -39,6 +43,15 @@ public class XmlBeanFactory implements BeanFactory {
         definitionReader.locationBeanDefinitions(location);
         // 注册bean
         registerBeanDefinition();
+        // 织入切面方法
+        registerBeanProcessors();
+    }
+
+    private void registerBeanProcessors() throws Exception {
+        List beans = getBeanForType(BeanProcessor.class);
+        for (Object bean : beans) {
+            beanProcessors.add((BeanProcessor) bean);
+        }
     }
 
     private void registerBeanDefinition() {
@@ -46,7 +59,7 @@ public class XmlBeanFactory implements BeanFactory {
             String name = (String) entry.getKey();
             BeanDefinition beanDefinition = (BeanDefinition) entry.getValue();
             beanDefinitionMap.put(name, beanDefinition);
-            beanNameList.add(name);
+            beanDefinitionNames.add(name);
         }
     }
 
@@ -55,6 +68,7 @@ public class XmlBeanFactory implements BeanFactory {
      * @param name
      * @return
      */
+    @Override
     public Object getBean(String name) throws Exception {
         BeanDefinition beanDefinition = beanDefinitionMap.get(name);
         if (beanDefinition == null) {
@@ -64,13 +78,27 @@ public class XmlBeanFactory implements BeanFactory {
         Object bean = beanDefinition.getBean();
         if (bean == null) {
             bean = createBean(beanDefinition);
+            bean = initialization(bean, name);
             beanDefinition.setBean(bean);
+        }
+        return bean;
+    }
+
+    private Object initialization(Object bean, String name) throws Exception {
+        for (BeanProcessor beanProcessor : beanProcessors) {
+            bean = beanProcessor.processBeforeInitialization(bean, name);
+        }
+        for (BeanProcessor beanProcessor : beanProcessors) {
+            bean = beanProcessor.processAfterInitialization(bean, name);
         }
         return bean;
     }
 
     private Object createBean(BeanDefinition beanDefinition) throws Exception {
         Object bean = beanDefinition.getBeanClass().newInstance();
+        if (bean instanceof BeanFactoryAware){
+            ((BeanFactoryAware) bean).setBeanFactory(this);
+        }
         List<BeanProperty> propertyList = beanDefinition.getBeanProperties().getPropertyList();
         for (BeanProperty property : propertyList) {
             setPropertyValue(bean, property);
@@ -101,5 +129,15 @@ public class XmlBeanFactory implements BeanFactory {
             field.set(bean, value);
         }
 
+    }
+
+    public List getBeanForType(Class<?> type) throws Exception {
+        List beans = new ArrayList();
+        for (String beanDefinitionName : beanDefinitionNames) {
+            if (type.isAssignableFrom(beanDefinitionMap.get(beanDefinitionName).getBeanClass())) {
+                beans.add(getBean(beanDefinitionName));
+            }
+        }
+        return beans;
     }
 }

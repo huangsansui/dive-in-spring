@@ -1,0 +1,22 @@
+<beans xmlns="http://www.springframework.org/schema/beans">
+    <bean id="wheel" class="top.huangsansui.spring.simple.Wheel">
+        <property name="name" value="Michelin"/>
+        <property name="size" value="15mm"/>
+    </bean>
+    <bean id="car" class="top.huangsansui.spring.simple.Car">
+        <property name="name" value="Audi"></property>
+        <property name="price" value="1000元"></property>
+        <property name="wheel" ref="wheel"></property>
+    </bean>
+
+    <bean id="helloService" class="top.huangsansui.spring.simple.HelloServiceImpl"/>
+
+    <bean id="logInterceptor" class="top.huangsansui.spring.aop.LogInterceptor"/>
+
+    <bean id="autoProxyCreator" class="top.huangsansui.spring.aop.AspectJAwareAdvisorAutoCreator"/>
+
+    <bean id="helloServiceAspect" class="top.huangsansui.spring.aop.AspectJExpressionPointcutAdvisor">
+        <property name="advice" ref="logInterceptor"/>
+        <property name="expression" value="execution(* top.huangsansui.spring.simple.HelloService.*(..))"/>
+    </bean>
+</beans>

@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
  * @Date: 2018/12/22
  * @since: JDK 1.8
  */
-public class AopTest {
+public class JdkAopProxyTest {
 
     @Test
     public void test() {
@@ -24,7 +24,7 @@ public class AopTest {
         HelloService helloService = new HelloServiceImpl();
         helloService.sayHello();
 
-        System.out.println("-------    proxy ------");
+        System.out.println("------- jdk proxy ------");
         AdvisedSupport advisedSupport = new AdvisedSupport();
         TargetSource targetSource = new TargetSource(helloService,
                 HelloServiceImpl.class, HelloServiceImpl.class.getInterfaces());
